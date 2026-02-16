@@ -1,7 +1,9 @@
 package com.employeeService.controllers;
 
 import com.employeeService.dto.EmployeeDto;
+import com.employeeService.exceptions.ResourceNofFoundException;
 import com.employeeService.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class EmployeeController {
 
 
     @PostMapping(path = "/save")
-    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto){
+    public ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody EmployeeDto employeeDto){
        EmployeeDto savedUser=employeeService.createEmployee(employeeDto);
         return new ResponseEntity<>(savedUser,HttpStatus.CREATED);
     }
@@ -31,7 +33,7 @@ public class EmployeeController {
     public  ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable(required = true) Long employeeId){
         Optional<EmployeeDto> employeeDto=employeeService.getEmployeeById(employeeId);
         return employeeDto.map(employeeDto1 -> ResponseEntity.ok(employeeDto1))
-                .orElseThrow(()->new NoSuchElementException("Employee not found"));
+                .orElseThrow(()->new ResourceNofFoundException("Employee not found"));
     }
 
     @GetMapping(path = "/all")
@@ -40,7 +42,7 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/{employeeId}")
-    public ResponseEntity<EmployeeDto> updateEmployeeById(@RequestBody EmployeeDto employeeDto,@PathVariable(required = true) Long employeeId){
+    public ResponseEntity<EmployeeDto> updateEmployeeById(@Valid @RequestBody EmployeeDto employeeDto,@PathVariable(required = true) Long employeeId){
         return ResponseEntity.ok(employeeService.updateEmployeeById(employeeDto,employeeId));
     }
 
