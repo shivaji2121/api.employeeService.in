@@ -2,10 +2,7 @@ package com.employeeService.entity;
 
 import com.employeeService.dto.EmployeeStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Generated;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -35,4 +32,12 @@ public class EmployeeEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "is_active")
     private EmployeeStatus isActive;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
