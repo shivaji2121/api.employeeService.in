@@ -30,7 +30,7 @@ public class EmployeeDto {
 
     @NotNull(message = "Date of joining is required")
     @PastOrPresent(message = "Date of joining cannot be in the future")
-    @JsonFormat(pattern = "yyyy.MM.dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfJoining;
 
     @NotNull(message = "Employee status is required")
